@@ -14,6 +14,7 @@ from .forms import SignupForm
 from .nav import nav
 
 from flask import json
+from .utils import ut
 
 frontend = Blueprint('frontend', __name__)
 
@@ -23,6 +24,7 @@ frontend = Blueprint('frontend', __name__)
 nav.register_element('frontend_top', Navbar(
     View('Flask-Bootstrap', '.index'),
     View('Home', '.index'),
+    View('Home Neo Make', '.indexV2'),
     View('Forms Example', '.example_form'),
     View('Debug-Info', 'debug.debug_root'),
     Subgroup(
@@ -65,3 +67,8 @@ def example_form():
         return redirect(url_for('.index'))
 
     return render_template('signup.html', form=form)
+
+
+@frontend.route('/indexV2/')
+def indexV2():
+    return render_template('indexV2.html', hosts=ut.Utils.get_json_file())
