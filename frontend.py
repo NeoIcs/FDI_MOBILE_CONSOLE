@@ -71,4 +71,4 @@ def example_form():
 
 @frontend.route('/indexV2/')
 def indexV2():
-    return render_template('indexV2.html', hosts=ut.Utils.get_json_file())
+    return render_template('indexV2.html', hosts=ut.Utils.get_json_file('./FDI_MOBILE_CONSOLE/utils/index.json'))

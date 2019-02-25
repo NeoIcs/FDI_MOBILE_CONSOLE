@@ -6,9 +6,9 @@ class Utils():
         pass
 
     @staticmethod
-    def get_json_file(json_file =None):
+    def get_json_file(json_file):
         data = 'load data fail'
-        with open('./FDI_MOBILE_CONSOLE/utils/index.json') as f:
+        with open(json_file) as f:
              data = json.load(f)
 
         return data
