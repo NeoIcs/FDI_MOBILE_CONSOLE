@@ -35,50 +35,68 @@
 {% block content %}
 
 </div>
-{% for host in hosts['hosts'] %}
+    {% for host in hosts['hosts'] %}
     <div class="container">
-        <div class="accordion" id="accordionExample{{host['name']}}"></div>
-        <div class="card">
+        <div class="card" style="margin:10px">
             <div class="card-header" id="headingOne{{host['name']}}">
-                <h2 class="mb-0">
-                    <button
-                        class="btn btn-link"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#collapseOne{{host['name']}}"
-                        aria-expanded="true"
-                        aria-controls="collapseOne{{host['name']}}">
-                        {{host['name']}}
-                    </button>
-
-                    <button class="btn_icon">
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </button>
-                </h2>
+                <button
+                    class="btn btn-link"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseOne{{host['name']}}"
+                    aria-expanded="true"
+                    aria-controls="collapseOne{{host['name']}}">
+                    {{host['name']}}
+                </button>
+                <button 
+                    class="btn_icon"
+                    type="button"
+                    onclick="window.location.href='{{url_for('frontend.server_status', serverName=host['name'])}}';">
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                </button>
             </div>
-
             <div
                 id="collapseOne{{host['name']}}"
                 class="collapse"
                 aria-labelledby="headin gOne"
                 data-parent="#accordionExample{{host['name']}}">
                 <div class="card-body">
-                    <h2>Devices</h2>
-                    {% for phone in host['info']['phones'] %}
-                        <li>{{phone['serial_no']}}
-                            {% if phone['status'] == '1' %}
-                                <i class="work fas fa-lightbulb"></i>
-                            {% else %}
-                                <i class="nonwork fas fa-lightbulb"></i>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
+                    <h3>{{host['name']}}的裝置列表</h3>
+                    <table>
+                        <thead>
+                            <tr class="text-center">
+                                <th style="text-align:center">serial_no</th>
+                                <th>device_status</th>
+                                <th style="padding-left:20px;padding-right:20px">device_detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for phone in host['info']['phones'] %}
+                                <tr class="text-center">
+                                    <td style=padding-left:20px;padding-right:20px>{{phone['serial_no']}}</td>
+                                    {% if phone['status'] == '1' %}
+                                    <td class="work fas fa-lightbulb text-center" style="align:center"></td>
+                                    {% else %}
+                                    <td class="nonwork fas fa-lightbulb" style="align:center"></td>
+                                    {% endif %}
+                                    <td>
+                                        <button 
+                                            class="fa fa-arrow-right"
+                                            aria-hidden="true"
+                                            type="button"
+                                            onclick="window.location.href='{{url_for('frontend.device_status', serianlNo=phone['serial_no'])}}';">
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-{% endfor %}
+    {% endfor %}
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
